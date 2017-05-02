@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!--Splash动画效果-->
-    <!--<fragment
+    <fragment
         android:id="@+id/splashPagerFragment"
-        android:name="com.feicuiedu.gitdroid.splash.SplashPagerFragment"
+        android:name="com.yulu.zhaoxinpeng.mygitdroid.splash.SplashPagerFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttonBar"/>-->
+        android:layout_above="@+id/buttonBar"/>
 
     <LinearLayout
         android:id="@+id/buttonBar"

@@ -13,4 +13,5 @@
 
     <color name="colorDim">#bebebe</color>
     <color name="colorRefresh">#808183</color>
+    <color name="colorNetEaseRed">#EA2000</color>
 </resources>
