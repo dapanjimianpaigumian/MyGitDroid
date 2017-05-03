@@ -51,7 +51,6 @@ public class SplashPagerFragment extends Fragment {
     @BindColor(R.color.colorGreen) int colorGreen;
     @BindColor(R.color.colorRed) int colorRed;
     @BindColor(R.color.colorYellow) int colorYellow;
-    @BindColor(R.color.colorNetEaseRed) int NetEaseRed;
 
     @Nullable
     @Override
