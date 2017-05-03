@@ -42,4 +42,8 @@ public class SplashPagerAdapter extends PagerAdapter{
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView(mViews[position]);
     }
+    // 获取某一视图
+    public View getView(int position) {
+        return mViews[position];
+    }
 }

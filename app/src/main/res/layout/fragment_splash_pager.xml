@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/phone" />
+
             <ImageView
                 android:id="@+id/ivPhoneBlank"
                 android:layout_width="wrap_content"
@@ -33,6 +33,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="5dp"
                 android:src="@drawable/screen_blank_large" />
+
             <ImageView
                 android:id="@+id/ivPhoneFont"
                 android:layout_width="wrap_content"
@@ -40,8 +41,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="5dp"
-                android:src="@drawable/screen_large"
-                android:alpha="0"/>
+                android:alpha="0"
+                android:src="@drawable/screen_large" />
 
         </FrameLayout>
 
@@ -50,7 +51,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <!--圆点指示器-->
     <me.relex.circleindicator.CircleIndicator
@@ -59,5 +60,5 @@
         android:layout_height="@dimen/dp_60"
         android:layout_gravity="bottom"
         app:ci_drawable="@drawable/circle_indicator_selected"
-        app:ci_drawable_unselected="@drawable/circle_indicator_unselected"/>
+        app:ci_drawable_unselected="@drawable/circle_indicator_unselected" />
 </FrameLayout>
