@@ -3,3 +3,14 @@ GitDroid 项目
 2017/5/2
 SplashActivity 欢迎页的搭建
 其中用到了 圆点指示器，学会了改变圆点指示器的颜色。
+
+2017/5/3
+1. SplashActivity 欢迎页
+   SplashPagerFragement  ViewPager滑动过程中，背景颜色变化，背景中手机图片的移动与透明度变化
+   Page2  AndroidViewAnimation开源库 代码家 实现ImageView的淡入动画
+2. MainActivity  主界面
+   使用DrawerLayout实现侧滑效果，
+   使用NavigationView实现侧滑的菜单栏
+   使用replace方法替换MainActivity界面之上的Fragment
+3. RepositoryFragment 热门仓库界面
+   将TabLayout与ViewPager绑定，ViewPager的每个页面都对应一个Tab标签
