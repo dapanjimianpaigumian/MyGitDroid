@@ -14,3 +14,12 @@ SplashActivity 欢迎页的搭建
    使用replace方法替换MainActivity界面之上的Fragment
 3. RepositoryFragment 热门仓库界面
    将TabLayout与ViewPager绑定，ViewPager的每个页面都对应一个Tab标签
+
+2017/5/5
+1. NetClient
+   用Retrofit获取网络数据，使用了日志拦截器和Gson转换器；
+2. Language
+   使用了新的依赖：compile 'commons-io:commons-io:20030203.000550'，用来将IO流转换为字符串；
+3. SubRepositoryFragment
+   使用了新的依赖，用来进行刷新和加载的操作，compile 'in.srain.cube:ptr-load-more:1.0.2'，
+   同时进行了样式的设置；

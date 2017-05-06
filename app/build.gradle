@@ -38,4 +38,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    //IO流转换为字符串
+    compile 'commons-io:commons-io:20030203.000550'
+    // 刷新和加载的依赖
+    compile 'in.srain.cube:ptr-load-more:1.0.2'
 }

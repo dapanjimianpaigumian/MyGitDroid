@@ -7,6 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Administrator on 2017/5/5.
+ * 网络模块
  */
 
 public class NetClient {
@@ -17,7 +18,7 @@ public class NetClient {
     private Retrofit mRetrofit;
     private NetApi mNetApi;
 
-    private NetClient(){
+    private NetClient() {
 
         //设置日志拦截器
         mHttpLoggingInterceptor = new HttpLoggingInterceptor();
@@ -36,16 +37,17 @@ public class NetClient {
                 .build();
     }
 
-    private static synchronized NetClient getInstance(){
-        if(mNetClient==null){
+    private static synchronized NetClient getInstance() {
+        if (mNetClient == null) {
             mNetClient = new NetClient();
         }
         return mNetClient;
     }
 
-    public synchronized NetApi getNetApi(){
-        if(mNetApi==null){
-            mNetApi = new NetApi();
+    // 获取接口API
+    public synchronized NetApi getNetApi() {
+        if (mNetApi == null) {
+            mNetApi = mRetrofit.create(NetApi.class);
         }
         return mNetApi;
     }

@@ -1,4 +1,4 @@
-package com.yulu.zhaoxinpeng.mygitdroid.content.repositories;
+package com.yulu.zhaoxinpeng.mygitdroid.content;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,7 +49,7 @@ public class RepositoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Viewpager切换设置适配器:注意：getChildFragmentManager()
-        mRepositoryAdapter = new RepositoryAdapter(getChildFragmentManager());
+        mRepositoryAdapter = new RepositoryAdapter(getChildFragmentManager(),getContext());
         mViewPager.setAdapter(mRepositoryAdapter);
 
         //绑定Tablayout与ViewPager

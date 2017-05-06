@@ -17,15 +17,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
-import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.RepositoryFragment;
+import com.yulu.zhaoxinpeng.mygitdroid.content.RepositoryFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.user.UserFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * 主界面的Activity,SplashPagerFragment基于此Activity
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.toolbar)
