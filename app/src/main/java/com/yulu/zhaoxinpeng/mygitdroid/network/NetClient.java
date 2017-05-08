@@ -37,7 +37,7 @@ public class NetClient {
                 .build();
     }
 
-    private static synchronized NetClient getInstance() {
+    public static synchronized NetClient getInstance() {
         if (mNetClient == null) {
             mNetClient = new NetClient();
         }

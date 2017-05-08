@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yulu.zhaoxinpeng.mygitdroid">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +14,8 @@
             android:launchMode="singleTask"/>
         <activity android:name="com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity"
             android:launchMode="singleTask"/>
-        <activity android:name="com.yulu.zhaoxinpeng.mygitdroid.splash.SplashActivity" >
+        <activity android:name="com.yulu.zhaoxinpeng.mygitdroid.splash.SplashActivity"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
