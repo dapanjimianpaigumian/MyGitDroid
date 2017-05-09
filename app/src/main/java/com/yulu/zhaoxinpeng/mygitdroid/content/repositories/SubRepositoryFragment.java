@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.yulu.zhaoxinpeng.mygitdroid.R;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.Language;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.Repo;
+import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.subrepoInfo.SubRepoInfoActivity;
 
 import java.util.List;
 
@@ -88,6 +90,21 @@ public class SubRepositoryFragment extends MvpFragment<SubRepositoryView, SubRep
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLvRepos.setAdapter(mSubRepositoryAdapter);
+        mLvRepos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Repo repo = mSubRepositoryAdapter.getItem(position);
+                SubRepoInfoActivity.getSubRepoInstance(getContext(),repo);
+            }
+        });
+
+        mLvRepos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // TODO: 2017/5/9 长按收藏 待实现
+                return true;
+            }
+        });
         initRefresh();
     }
 
