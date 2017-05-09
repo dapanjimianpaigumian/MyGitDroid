@@ -128,7 +128,7 @@ public class SubRepositoryFragment extends MvpFragment<SubRepositoryView, SubRep
         mPtrClassicFrameLayout.setPtrHandler(new PtrDefaultHandler2() {
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-                // TODO: 2017/5/6 上拉加载更多的网络请求
+                presenter.load();
             }
 
             @Override
@@ -145,12 +145,19 @@ public class SubRepositoryFragment extends MvpFragment<SubRepositoryView, SubRep
         mPtrClassicFrameLayout.refreshComplete();
     }
 
+    //停止加载
+    @Override
+    public void stopLoad() {
+        mPtrClassicFrameLayout.refreshComplete();
+    }
+
     //显示空视图
     @Override
-    public void showEmptyView() {
+    public void showEmptyView(String s) {
         mPtrClassicFrameLayout.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.VISIBLE);
         mErrorView.setVisibility(View.GONE);
+        mEmptyView.setText(s);
     }
 
     //显示错误视图
@@ -166,11 +173,19 @@ public class SubRepositoryFragment extends MvpFragment<SubRepositoryView, SubRep
         mActivityUtils.showToast(s);
     }
 
-    //设置数据
+    //设置刷新数据
     @Override
     public void addRefreshData(List<Repo> repos) {
         //刷新数据时，先清空再添加
         mSubRepositoryAdapter.clear();
+        mSubRepositoryAdapter.addAll(repos);
+        mSubRepositoryAdapter.notifyDataSetChanged();
+    }
+
+    //设置加载数据
+    @Override
+    public void addLoadData(List<Repo> repos) {
+        //加载数据时，直接添加
         mSubRepositoryAdapter.addAll(repos);
         mSubRepositoryAdapter.notifyDataSetChanged();
     }
