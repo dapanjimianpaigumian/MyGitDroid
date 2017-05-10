@@ -16,10 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.content.RepositoryFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.user.UserFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity;
+import com.yulu.zhaoxinpeng.mygitdroid.login.model.UserRepo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityUtils mActivityUtils;
     private RepositoryFragment mRepositoryFragment;
     private UserFragment mUserFragment;
+    private Button mBtnLogin;
+    private ImageView mIvIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 设置布局：触发onContentChanged方法
         setContentView(R.layout.activity_main);
+    }
 
+    // 实现个人信息的展示
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //如果用户信息为空,那么按钮显示 登录GitHub
+        if (UserRepo.isEmpty()) {
+            mBtnLogin.setText(R.string.login_github);
+            return;
+        }
+
+        //如果用户信息不为空
+        mBtnLogin.setText(R.string.switch_account);
+
+        //改变toolbar的标题
+        getSupportActionBar().setTitle(UserRepo.getUser().getLogin());
+        //设置头像
+        Picasso.with(this)
+                .load(UserRepo.getUser().getAvatar())
+                .into(mIvIcon);
     }
 
     @Override
@@ -69,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mNavigationView.setNavigationItemSelectedListener(this);
 
         //找到侧滑的头布局的控件
-        Button mBtnLogin = ButterKnife.findById(mNavigationView.getHeaderView(0), R.id.btnLogin);
-        ImageView mIvIcon = ButterKnife.findById(mNavigationView.getHeaderView(0), R.id.ivIcon);
+        mBtnLogin = ButterKnife.findById(mNavigationView.getHeaderView(0), R.id.btnLogin);
+        mIvIcon = ButterKnife.findById(mNavigationView.getHeaderView(0), R.id.ivIcon);
 
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

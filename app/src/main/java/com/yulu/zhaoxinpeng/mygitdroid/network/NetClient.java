@@ -1,5 +1,7 @@
 package com.yulu.zhaoxinpeng.mygitdroid.network;
 
+import com.yulu.zhaoxinpeng.mygitdroid.login.TokenInterceptor;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -18,6 +20,7 @@ public class NetClient {
     private Retrofit mRetrofit;
     private NetApi mNetApi;
 
+    // 私有的构造方法
     private NetClient() {
 
         //设置日志拦截器
@@ -27,6 +30,7 @@ public class NetClient {
         //设置Okhttp客户端
         mOkHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(mHttpLoggingInterceptor)
+                .addInterceptor(new TokenInterceptor())//添加自定义拦截器
                 .build();
 
         //设置Retrofit客户端
@@ -37,6 +41,7 @@ public class NetClient {
                 .build();
     }
 
+    // 共有的创建方法
     public static synchronized NetClient getInstance() {
         if (mNetClient == null) {
             mNetClient = new NetClient();

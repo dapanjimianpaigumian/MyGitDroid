@@ -21,13 +21,13 @@
         />
 
     <!--动画控件-->
-    <!--<pl.droidsonroids.gif.GifImageView
+    <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifImageView"
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:src="@drawable/gif_loading"
-        android:background="#262626"/>-->
+        android:background="#262626"/>
 
 </RelativeLayout>

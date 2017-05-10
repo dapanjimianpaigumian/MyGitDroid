@@ -44,4 +44,6 @@ dependencies {
     compile 'in.srain.cube:ptr-load-more:1.0.2'
     compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    // 展示gif动画：android-gif-drawable在github上搜索
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 }
