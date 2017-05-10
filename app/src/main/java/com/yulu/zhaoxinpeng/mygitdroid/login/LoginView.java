@@ -4,10 +4,10 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
  * Created by Administrator on 2017/5/10.
- *  登录的视图接口
+ * 登录的视图接口
  */
 
-public interface LoginView extends MvpView{
+public interface LoginView extends MvpView {
 
     void showToast(String s);
 

@@ -1,7 +1,6 @@
 package com.yulu.zhaoxinpeng.mygitdroid.login;
 
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
-import com.yulu.zhaoxinpeng.mygitdroid.commons.LogUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.AccessToken;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.User;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.UserRepo;
@@ -17,9 +16,20 @@ import retrofit2.Response;
  * 登录的业务类
  */
 
-public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
+public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView> {
 
-    public void login(String code){
+    private Call<AccessToken> tokenCall;
+    private Call<User> userCall;
+
+    //解绑视图时，取消网络请求
+    @Override
+    public void detachView(boolean retainInstance) {
+        super.detachView(retainInstance);
+        if (tokenCall != null) tokenCall.cancel();
+        if (userCall != null) userCall.cancel();
+    }
+
+    public void login(String code) {
         /**
          * 1. 获取token值
          * 2. 获取用户信息
@@ -27,14 +37,14 @@ public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
 
         getView().showProgressbar();
 
-        Call<AccessToken> tokenCall= NetClient.getInstance().getNetApi().getOAuthToken(
+        tokenCall = NetClient.getInstance().getNetApi().getOAuthToken(
                 NetApi.CLIENT_ID,
-                NetApi.CLIENT_SECRET,code);
+                NetApi.CLIENT_SECRET, code);
         tokenCall.enqueue(mTokenCallback);
     }
 
     // 获取token的回调
-    private Callback<AccessToken> mTokenCallback=new Callback<AccessToken>() {
+    private Callback<AccessToken> mTokenCallback = new Callback<AccessToken>() {
         @Override
         public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
             if (response.isSuccessful()) {
@@ -48,7 +58,7 @@ public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
                 getView().showProgressbar();
 
                 //获取用户信息
-                Call<User> userCall = NetClient.getInstance().getNetApi().getUser();
+                userCall = NetClient.getInstance().getNetApi().getUser();
                 userCall.enqueue(mUserCallback);
             }
         }
@@ -56,7 +66,7 @@ public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
         @Override
         public void onFailure(Call<AccessToken> call, Throwable t) {
             // 显示信息
-            getView().showToast("请求token失败："+t.getMessage());
+            getView().showToast("请求token失败：" + t.getMessage());
             // 可以在失败之后，让WebView重新加载、重新请求
             getView().resetWeb();
             // 重新展示进度动画
@@ -65,7 +75,7 @@ public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
     };
 
     // 获取user的回调
-    private Callback<User> mUserCallback=new Callback<User>() {
+    private Callback<User> mUserCallback = new Callback<User>() {
         @Override
         public void onResponse(Call<User> call, Response<User> response) {
             if (response.isSuccessful()) {
@@ -85,7 +95,7 @@ public class LoginPresenter extends MvpNullObjectBasePresenter<LoginView>{
         @Override
         public void onFailure(Call<User> call, Throwable t) {
 
-            getView().showToast("请求登录失败："+t.getMessage());
+            getView().showToast("请求登录失败：" + t.getMessage());
 
             getView().resetWeb();
 

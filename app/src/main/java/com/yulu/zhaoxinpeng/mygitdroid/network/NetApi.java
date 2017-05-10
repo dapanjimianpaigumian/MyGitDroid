@@ -23,24 +23,25 @@ import retrofit2.http.Query;
 // 服务器的接口构建
 public interface NetApi {
 
-    public static final String BASE_URL="https://api.github.com";
+    public static final String BASE_URL = "https://api.github.com";
 
     // GitHub 网页端注册得到的应用信息
-    String CLIENT_ID="4751c5bcb81bb3c79511";
-    String CLIENT_SECRET="9b1fc62a97ab97883ce1343af35a213b19da79ea";
+    String CLIENT_ID = "4751c5bcb81bb3c79511";
+    String CLIENT_SECRET = "9b1fc62a97ab97883ce1343af35a213b19da79ea";
 
     String AUTH_SCOPE = "user,public_repo,repo";
 
-    String AUTH_CALLBACK="dapanjimianpaigumian";
+    String AUTH_CALLBACK = "dapanjimianpaigumian";
 
     // 登录页面的url
-    String AUTH_URL="https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&scope=" + AUTH_SCOPE;
+    String AUTH_URL = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&scope=" + AUTH_SCOPE;
 
     /**
      * 获取授权登录的token值
-     * @param ClientId 注册应用得到的
+     *
+     * @param ClientId     注册应用得到的
      * @param clientSecret 注册应用得到的
-     * @param code 拿到的临时授权码
+     * @param code         拿到的临时授权码
      * @return
      */
     @FormUrlEncoded
@@ -52,14 +53,16 @@ public interface NetApi {
 
     /**
      * 获取已经授权过的用户信息
+     *
      * @return
      */
     @GET("/user")
     Call<User> getUser();
 
     /**
-     *获取热门仓库的列表
-     * @param q 搜索的关键字 language:java 语言类型
+     * 获取热门仓库的列表
+     *
+     * @param q    搜索的关键字 language:java 语言类型
      * @param page 页数
      * @return
      */
@@ -67,18 +70,19 @@ public interface NetApi {
     Call<RepoResult> searchRepo(@Query("q") String q, @Query("page") int page);
 
 
-
     /**
      * 获取ReadMe文件
+     *
      * @param owner 仓库提供者
-     * @param repo 仓库名称
+     * @param repo  仓库名称
      * @return
      */
     @GET("/repos/{owner}/{repo}/readme")
-    Call<SubRepoContentResult> getReadMe(@Path("owner")String owner,@Path("repo")String repo);
+    Call<SubRepoContentResult> getReadMe(@Path("owner") String owner, @Path("repo") String repo);
 
     /**
      * 获取MarkDown文件内容：以纯文本返回，WebView加载
+     *
      * @param requestBody MarkDown文件
      * @return
      */

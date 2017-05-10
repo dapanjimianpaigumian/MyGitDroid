@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //默认展示热门仓库
         mNavigationView.setCheckedItem(R.id.github_hot_repo);
-        if(mRepositoryFragment==null) mRepositoryFragment = new RepositoryFragment();
+        if (mRepositoryFragment == null) mRepositoryFragment = new RepositoryFragment();
         replaceFragment(mRepositoryFragment);
     }
 
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
     }
 
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.github_hot_coder:
-                if (mUserFragment ==null) mUserFragment = new UserFragment();
+                if (mUserFragment == null) mUserFragment = new UserFragment();
                 if (!mUserFragment.isAdded()) {
                     replaceFragment(mUserFragment);
                 }
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //如果侧滑呈打开状态，那么先关闭侧滑，否则直接退出
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

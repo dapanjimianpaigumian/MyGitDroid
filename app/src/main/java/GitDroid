@@ -28,3 +28,17 @@ SplashActivity 欢迎页的搭建
 1. SubRepoInfoPresenter
    请求仓库ReadMe文件及内容时，用了两次异步请求，
    解析GitHub网页的ReadMe文件时，用到了文件的解密，Base64.decode(content, Base64.DEFAULT);
+
+2017/5/10
+1. LoginActivity
+
+   GitHub手机网页的授权登陆 ：
+   1> 在GitHub网页上创建一个应用并授权；
+   2> WebView加载GitHub登录网页；
+   3> 首次需要手动授权的同意，第二次登录开始不需要手动授权(每次返回一个临时授权码code)；
+   4> 根据返回的code获取token(访问令牌，身份标识)；
+   5> 获取用户信息等。
+
+   <pl.droidsonroids.gif.GifImageView  gif动画，可用作等待界面的动画
+
+
