@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.content.RepositoryFragment;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favority.FavorityFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.user.UserFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.UserRepo;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UserFragment mUserFragment;
     private Button mBtnLogin;
     private ImageView mIvIcon;
+    private FavorityFragment mFavorityFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,20 +134,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         switch (item.getItemId()) {
+            //热门仓库
             case R.id.github_hot_repo:
                 if (!mRepositoryFragment.isAdded()) {
                     replaceFragment(mRepositoryFragment);
                 }
                 break;
+            //热门开发者
             case R.id.github_hot_coder:
                 if (mUserFragment == null) mUserFragment = new UserFragment();
                 if (!mUserFragment.isAdded()) {
                     replaceFragment(mUserFragment);
                 }
                 break;
+            //我的收藏
             case R.id.arsenal_my_repo:
-                mActivityUtils.showToast("我的收藏");
+                if(mFavorityFragment==null) mFavorityFragment = new FavorityFragment();
+                if(!mFavorityFragment.isAdded()){
+                    replaceFragment(mFavorityFragment);
+                }
                 break;
+            //每日干货
             case R.id.tips_daily:
                 mActivityUtils.showToast("每日干货");
                 break;
