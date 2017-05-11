@@ -1,4 +1,4 @@
-package com.yulu.zhaoxinpeng.mygitdroid.content.favority.dao;
+package com.yulu.zhaoxinpeng.mygitdroid.content.favorite.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,8 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.yulu.zhaoxinpeng.mygitdroid.content.favority.model.LocalRepo;
-import com.yulu.zhaoxinpeng.mygitdroid.content.favority.model.RepoGroup;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.model.LocalRepo;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.model.RepoGroup;
 
 import java.sql.SQLException;
 
@@ -21,10 +21,12 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
     private static final String DB_NAME="repo_favorite.db";
     private static final int DB_VERSION=1;
     private static DBHelper mDbHelper;
+    private Context context;
 
     //自定义私有构造方法
     private DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        this.context=context;
     }
 
     //创建单例方法
@@ -41,8 +43,13 @@ public class DBHelper extends OrmLiteSqliteOpenHelper {
         // 对表进行创建、一创建就往表里面填充数据
         // 表的工具类：可以对表进行创建、清空和删除等
         try {
+            // 仓库类别表和本地仓库表的创建
             TableUtils.createTableIfNotExists(connectionSource, RepoGroup.class);
             TableUtils.createTableIfNotExists(connectionSource, LocalRepo.class);
+
+            // 将本地的数据直接填充到数据库表里面
+            new RepoGroupDao(this).createOrUpdate(RepoGroup.getDefaultGroup(context));
+            new LocalRepoDao(this).createOrUpdate(LocalRepo.getDefaultLocalRepo(context));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

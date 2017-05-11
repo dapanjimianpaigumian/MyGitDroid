@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.content.RepositoryFragment;
-import com.yulu.zhaoxinpeng.mygitdroid.content.favority.FavorityFragment;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.FavorityFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.user.UserFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.UserRepo;
