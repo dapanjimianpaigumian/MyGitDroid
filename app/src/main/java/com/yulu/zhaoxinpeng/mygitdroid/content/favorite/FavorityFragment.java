@@ -3,8 +3,12 @@ package com.yulu.zhaoxinpeng.mygitdroid.content.favorite;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -30,7 +34,7 @@ import butterknife.Unbinder;
  * 我的收藏
  */
 
-public class FavorityFragment extends Fragment {
+public class FavorityFragment extends Fragment implements PopupMenu.OnMenuItemClickListener{
 
     @BindView(R.id.tvGroupType)
     TextView mTvGroupType;
@@ -42,6 +46,7 @@ public class FavorityFragment extends Fragment {
     private RepoGroupDao mRepoGroupDao;
     private LocalRepoDao mLocalRepoDao;
     private FavoriteAdapter mFavoriteAdapter;
+    private int mCurrentRepoGroupId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +74,15 @@ public class FavorityFragment extends Fragment {
 
         // 默认显示的数据(全部)，根据不同的分组(以菜单的item的id)来显示不同的数据，单独写一个方法
         setFavoriteData(R.id.repo_group_all);
+
+        /**
+         * 1. 注册上下文菜单：表明显示的菜单作用到谁的身上
+         * 2. 创建上下文菜单：onCreateContextMenu，直接重写
+         *      菜单的填充、子菜单等
+         * 3. 需要处理点击了哪一项
+         */
+        // 注册上下文菜单：表明作用到ListView上
+        registerForContextMenu(mListView);
     }
 
     //设置数据：根据不同的分组Id设置数据
@@ -86,6 +100,8 @@ public class FavorityFragment extends Fragment {
                 break;
             //其他所有分组
             default:
+                // 根据当前的GroupId去查询本地仓库的数据
+                mFavoriteAdapter.setDatas(mLocalRepoDao.queryGroupId(mCurrentRepoGroupId));
                 break;
         }
     }
@@ -96,7 +112,63 @@ public class FavorityFragment extends Fragment {
         unbinder.unbind();
     }
 
+    //点击弹出PopMenu
     @OnClick(R.id.btnFilter)
-    public void onViewClicked() {
+    public void onViewClicked(View view) {
+        /**
+         * 设置弹出菜单：
+         * 1.创建Popmenu
+         * 2.菜单的填充
+         */
+
+        //PopMenu的创建
+        PopupMenu mPopMenu = new PopupMenu(getContext(), view);
+
+        // 填充菜单：本地有一个Menu，还有一部分是从数据库表里面读取的
+        mPopMenu.inflate(R.menu.menu_popup_repo_groups);
+        // 另一部分在类别表里
+        /**
+         * 1. 拿到Menu：要填充到这上面
+         * 2. 读取数据库的数据
+         * 3. 添加数据到Menu上
+         */
+        Menu menu = mPopMenu.getMenu();
+        // 查询所有的仓库类别
+        List<RepoGroup> repoGroups = mRepoGroupDao.queryAll();
+        for (RepoGroup repoGroup :
+                repoGroups) {
+            // 填充菜单数据
+            menu.add(Menu.NONE, repoGroup.getId(), Menu.NONE, repoGroup.getName());
+        }
+
+        //设置弹出菜单的点击事件
+        mPopMenu.setOnMenuItemClickListener(this);
+        //展示弹出菜单
+        mPopMenu.show();
+    }
+
+    //监听PopMenu菜单的点击事件
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+
+        /**
+         * 1. 当前的类别标题变化
+         * 2. 展示的数据变化
+         */
+        //改变左上角的类型标题
+        mTvGroupType.setText(item.getTitle().toString());
+
+        //根据选择的不同的类别展示数据
+        mCurrentRepoGroupId = item.getItemId();
+        setFavoriteData(mCurrentRepoGroupId);
+        return true;
+    }
+
+    //创建上下文菜单
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        // menu 上下文菜单  v 作用到的是v上  menuInfo 创建上下文的一些信息
+
     }
 }
