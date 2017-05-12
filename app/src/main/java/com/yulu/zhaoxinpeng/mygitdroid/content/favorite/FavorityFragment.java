@@ -41,10 +41,12 @@ public class FavorityFragment extends Fragment {
     Unbinder unbinder;
     private RepoGroupDao mRepoGroupDao;
     private LocalRepoDao mLocalRepoDao;
+    private FavoriteAdapter mFavoriteAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 分别创建用于操作数据库表的操作类
         mRepoGroupDao = new RepoGroupDao(DBHelper.getInstance(getContext()));
         mLocalRepoDao = new LocalRepoDao(DBHelper.getInstance(getContext()));
     }
@@ -61,14 +63,30 @@ public class FavorityFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<RepoGroup> repoGroupList = mRepoGroupDao.queryAll();
-        List<LocalRepo> localRepoList = mLocalRepoDao.queryAll();
+        //设置ListView适配器
+        mFavoriteAdapter = new FavoriteAdapter();
+        mListView.setAdapter(mFavoriteAdapter);
 
-        Log.e("TAG","仓库类别"+repoGroupList.size()+"本地仓库"+localRepoList.size());
+        // 默认显示的数据(全部)，根据不同的分组(以菜单的item的id)来显示不同的数据，单独写一个方法
+        setFavoriteData(R.id.repo_group_all);
+    }
 
-        for (LocalRepo localRepo :
-                localRepoList) {
-            Log.e("TBG", "仓库信息" + localRepo.getName());
+    //设置数据：根据不同的分组Id设置数据
+    private void setFavoriteData(int groupId) {
+        switch (groupId) {
+            //全部类型
+            case R.id.repo_group_all:
+                //设置本地仓库里面的所有类别为数据源
+                mFavoriteAdapter.setDatas(mLocalRepoDao.queryAll());
+                break;
+            //未分类
+            case R.id.repo_group_no:
+                // 查询出本地仓库表里面所有的未分类的仓库
+                mFavoriteAdapter.setDatas(mLocalRepoDao.queryNoGroup());
+                break;
+            //其他所有分组
+            default:
+                break;
         }
     }
 

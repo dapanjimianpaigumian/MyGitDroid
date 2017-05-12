@@ -48,7 +48,7 @@ public class LocalRepo {
     @SerializedName("full_name")
     private String fullName;
 
-
+    @DatabaseField(columnName = "description")
     @SerializedName("description")
     private String description;
 

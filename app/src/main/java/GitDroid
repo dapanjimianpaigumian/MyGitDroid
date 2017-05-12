@@ -41,4 +41,19 @@ SplashActivity 欢迎页的搭建
 
    <pl.droidsonroids.gif.GifImageView  gif动画，可用作等待界面的动画
 
+2017/5/11
+   数据库：
+   SQLite:不便于操作，一般情况下需要对其进行封装
+   ORMLite:使用比较简单，效率偏低，一般用以处理少量数据
+   GreenDao:效率比较高，使用比较难，用已处理大量数据
+
+   本项目中使用的是ORMLite，那么如何使用呢？
+   1> 首先导入依赖：
+      compile 'com.j256.ormlite:ormlite-android:5.0'// 提供了Android的特定的功能
+      compile 'com.j256.ormlite:ormlite-core:5.0'// 提供了核心的功能
+   2> 根据网络数据
+   帮助类  DBHelper  创建数据库、创建表、表里面的数据的填充和更新
+   操作类  LocalRepoDao RepoGroupDao  对数据库的表践行操作
+
+
 
