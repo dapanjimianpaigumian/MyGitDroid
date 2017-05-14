@@ -47,13 +47,36 @@ SplashActivity 欢迎页的搭建
    ORMLite:使用比较简单，效率偏低，一般用以处理少量数据
    GreenDao:效率比较高，使用比较难，用已处理大量数据
 
+   ORMlite：
+   对象关系映射，其实他的效果就是可以将一个实体类映射为数据库里面的一个表。
+   以注解的形式。
+
    本项目中使用的是ORMLite，那么如何使用呢？
    1> 首先导入依赖：
       compile 'com.j256.ormlite:ormlite-android:5.0'// 提供了Android的特定的功能
       compile 'com.j256.ormlite:ormlite-core:5.0'// 提供了核心的功能
-   2> 根据网络数据
-   帮助类  DBHelper  创建数据库、创建表、表里面的数据的填充和更新
-   操作类  LocalRepoDao RepoGroupDao  对数据库的表践行操作
+   2> 类的创建(用GsonFormat把服务器返回的json数据生成实体类，然后把)
+      (1)实体类的创建  用GsonFormat把服务器返回的json数据生成相应的实体类，比如LocalRepo和RepoGroup，
+      (1)帮助类的创建  DBHelper  创建数据库、创建表、表里面的数据的填充和更新
+                      继承 OrmLiteSqliteOpenHelper 并实现一些方法；
+      (2)操作类的创建  比如LocalRepoDao RepoGroupDao  一个数据库的表对应一个Dao类，一个Dao类只能
+                      操作一个数据库的表。
+                      ORMLite提供一个Dao类，Dao的类提供一系列的方法：添删改查
+   3> 数据库的表的创建
+      在已经创建的实体类的基础上，利用注解的方式表明这个实体类会生成相应的数据库的表。
+
+      @DatabaseField(id = true)// 指定他是数据库表里面的一个字段
+        id=true 指定该属性是主键id，主键是唯一的标识，不能重复的
+        (columnName = "NAME")  修改在数据库表里面显示的字段名为NAME
+
+      id=true表明这个是一个主键，如果指定为generatedId，表示自动增长id，我们不需要给它赋值。
+      columnName=""这个表示我们为其字段指定一个字段名，一般不指定的时候就是默认的变量名。
+      foreign = true表明是一个外键，就是关联了数据库中另外的一张表，这个字段的信息就是另外一张表里面的某一条信息。
+
+2017/5/12
+
+
+
 
 
 
