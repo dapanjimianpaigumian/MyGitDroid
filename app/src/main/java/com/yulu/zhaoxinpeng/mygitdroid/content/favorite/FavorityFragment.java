@@ -8,9 +8,12 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,6 +50,7 @@ public class FavorityFragment extends Fragment implements PopupMenu.OnMenuItemCl
     private LocalRepoDao mLocalRepoDao;
     private FavoriteAdapter mFavoriteAdapter;
     private int mCurrentRepoGroupId;
+    private LocalRepo mCurrentLocalRepo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -169,6 +173,66 @@ public class FavorityFragment extends Fragment implements PopupMenu.OnMenuItemCl
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         // menu 上下文菜单  v 作用到的是v上  menuInfo 创建上下文的一些信息
+        // 菜单项的填充：本地菜单文件的填充、子菜单项的填充
+        if (v.getId()== R.id.listView) {
 
+            //拿到当前作用的ListView的item，主要是拿到一个position
+            AdapterView.AdapterContextMenuInfo mContextMenuInfo= (AdapterView.AdapterContextMenuInfo) menuInfo;
+            int position = mContextMenuInfo.position; // 拿到作用的item的position
+
+            // 当前操作的本地仓库
+            mCurrentLocalRepo = mFavoriteAdapter.getItem(position);
+
+            //本地菜单文件的填充
+            MenuInflater menuInflater = getActivity().getMenuInflater();
+            menuInflater.inflate(R.menu.menu_context_favorite,menu);
+
+            // 将数据库里面类别表的类别数据填充到“移动至”的子菜单里面
+            // 拿到“移动至”的子菜单
+            SubMenu subMenu = menu.findItem(R.id.sub_menu_move).getSubMenu();
+            //获取数据库类别的集合
+            List<RepoGroup> repoGroups = mRepoGroupDao.queryAll();
+            // 将数据填充到子菜单里面
+            for (RepoGroup repoGroup :
+                    repoGroups) {
+                subMenu.add(R.id.menu_group_move, repoGroup.getId(), Menu.NONE, repoGroup.getName());
+            }
+
+        }
+    }
+
+    //监听contextMenu的点击事件
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        //如果点击的是删除
+        if (id== R.id.delete) {
+            //删除仓库
+            mLocalRepoDao.delete(mCurrentLocalRepo);
+            //刷新数据库
+            setFavoriteData(mCurrentRepoGroupId);
+            return true;
+        }
+
+        //如果点击的是移动至
+        int groupId = item.getGroupId();
+        if (groupId== R.id.menu_group_move) {
+            if (id== R.id.repo_group_no) {
+                mCurrentLocalRepo.setGroup(null);
+            }else {
+                //根据点击的类别设置当前的仓库类别
+                RepoGroup repoGroup = mRepoGroupDao.queryForId(id);
+                mCurrentLocalRepo.setGroup(repoGroup);
+            }
+
+            //更新数据库
+            mLocalRepoDao.createOrUpdate(mCurrentLocalRepo);
+            setFavoriteData(mCurrentRepoGroupId);
+            return true;
+        }
+
+        return true;
     }
 }
