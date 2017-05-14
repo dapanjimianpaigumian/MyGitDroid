@@ -12,8 +12,12 @@ import android.widget.TextView;
 import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.R;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.dao.DBHelper;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.dao.LocalRepoDao;
+import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.model.LocalRepo;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.Language;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.Repo;
+import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.RepoConvert;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.subrepoInfo.SubRepoInfoActivity;
 
 import java.util.List;
@@ -101,7 +105,18 @@ public class SubRepositoryFragment extends MvpFragment<SubRepositoryView, SubRep
         mLvRepos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: 2017/5/9 长按收藏 待实现
+                // 长按收藏
+                /**
+                 * 1.获取到我们长按的ListView的数据
+                 * 2.将数据添加到本地仓库数据库表中
+                 * 3.Dao里面需要传入的是LocalRepo
+                 * 4.Repo  LocalRepo   要做的：将Repo转换为LocalRepo
+                 */
+                Repo repo = mSubRepositoryAdapter.getItem(position);
+                LocalRepo localRepo = RepoConvert.convert(repo);
+                new LocalRepoDao(DBHelper.getInstance(getContext())).createOrUpdate(localRepo);
+                mActivityUtils.showToast("收藏成功~");
+                // 返回true，处理了事件，不会触发点击事件
                 return true;
             }
         });
