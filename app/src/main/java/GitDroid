@@ -55,7 +55,7 @@ SplashActivity 欢迎页的搭建
    1> 首先导入依赖：
       compile 'com.j256.ormlite:ormlite-android:5.0'// 提供了Android的特定的功能
       compile 'com.j256.ormlite:ormlite-core:5.0'// 提供了核心的功能
-   2> 类的创建(用GsonFormat把服务器返回的json数据生成实体类，然后把)
+   2> 类的创建
       (1)实体类的创建  用GsonFormat把服务器返回的json数据生成相应的实体类，比如LocalRepo和RepoGroup，
       (1)帮助类的创建  DBHelper  创建数据库、创建表、表里面的数据的填充和更新
                       继承 OrmLiteSqliteOpenHelper 并实现一些方法；
@@ -74,6 +74,17 @@ SplashActivity 欢迎页的搭建
       foreign = true表明是一个外键，就是关联了数据库中另外的一张表，这个字段的信息就是另外一张表里面的某一条信息。
 
 2017/5/12
+   FavoriteFragment
+1. PopMenu的使用
+   1> PopMenu的创建与填充；
+   2> PopMenu的点击事件监听  实现 onMenuItemClick。
+2. ContextMenu的使用
+   1> ContextMenu的注册
+      registerForContextMenu(mListView);// 注册上下文菜单：表明作用到ListView上
+   2> ContextMenu的创建
+      实现 onCreateContextMenu 方法；
+   3> ContextMenu 点击事件的监听
+      实现 onContextItemSelected 方法
 
 
 
