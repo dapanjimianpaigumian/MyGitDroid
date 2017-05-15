@@ -2,12 +2,14 @@ package com.yulu.zhaoxinpeng.mygitdroid.network;
 
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.model.RepoResult;
 import com.yulu.zhaoxinpeng.mygitdroid.content.repositories.subrepoInfo.SubRepoContentResult;
+import com.yulu.zhaoxinpeng.mygitdroid.content.user.model.UserResult;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.AccessToken;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.User;
 
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -89,4 +91,13 @@ public interface NetApi {
     @Headers({"Content-Type:text/plain"})
     @POST("/markdown/raw")
     Call<ResponseBody> markdown(@Body RequestBody requestBody);
+
+    /**
+     * 获取热门开发者的请求
+     * @param query 查询的条件
+     * @param page 查询的页数
+     * @return
+     */
+    @GET("/search/users")
+    Call<UserResult> searchUser(@Query("q")String query,@Query("page")int page);
 }
