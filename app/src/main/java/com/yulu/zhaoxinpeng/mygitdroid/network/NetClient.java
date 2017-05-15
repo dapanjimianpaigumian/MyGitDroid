@@ -1,5 +1,7 @@
 package com.yulu.zhaoxinpeng.mygitdroid.network;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.yulu.zhaoxinpeng.mygitdroid.login.TokenInterceptor;
 
 import okhttp3.OkHttpClient;
@@ -19,10 +21,15 @@ public class NetClient {
     private HttpLoggingInterceptor mHttpLoggingInterceptor;
     private Retrofit mRetrofit;
     private NetApi mNetApi;
+    private GankApi mGankApi;
+    private final Gson mGson;
 
     // 私有的构造方法
     private NetClient() {
 
+        mGson  = new GsonBuilder()
+                .setLenient()// 设置GSON的非严格模式setLenient()
+                .create();
         //设置日志拦截器
         mHttpLoggingInterceptor = new HttpLoggingInterceptor();
         mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -37,7 +44,7 @@ public class NetClient {
         mRetrofit = new Retrofit.Builder()
                 .client(mOkHttpClient)
                 .baseUrl(NetApi.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(mGson))
                 .build();
     }
 
@@ -55,5 +62,13 @@ public class NetClient {
             mNetApi = mRetrofit.create(NetApi.class);
         }
         return mNetApi;
+    }
+
+    //获取Gank的Api
+    public GankApi getGankApi(){
+        if(mGankApi==null){
+            mGankApi=mRetrofit.create(GankApi.class);
+        }
+        return mGankApi;
     }
 }

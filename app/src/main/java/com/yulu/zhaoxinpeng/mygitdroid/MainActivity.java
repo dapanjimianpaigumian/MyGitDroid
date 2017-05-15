@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import com.yulu.zhaoxinpeng.mygitdroid.commons.ActivityUtils;
 import com.yulu.zhaoxinpeng.mygitdroid.content.RepositoryFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.favorite.FavorityFragment;
+import com.yulu.zhaoxinpeng.mygitdroid.content.gank.GankFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.content.user.UserFragment;
 import com.yulu.zhaoxinpeng.mygitdroid.login.LoginActivity;
 import com.yulu.zhaoxinpeng.mygitdroid.login.model.UserRepo;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button mBtnLogin;
     private ImageView mIvIcon;
     private FavorityFragment mFavorityFragment;
+    private GankFragment mGankFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +158,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             //每日干货
             case R.id.tips_daily:
-                mActivityUtils.showToast("每日干货");
+                if (mGankFragment ==null) mGankFragment =new GankFragment();
+                if (!mGankFragment.isAdded()) {
+                    replaceFragment(mGankFragment);
+                }
                 break;
         }
 
