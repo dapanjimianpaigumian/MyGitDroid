@@ -39,6 +39,9 @@ SplashActivity 欢迎页的搭建
    4> 根据返回的code获取token(访问令牌，身份标识)；
    5> 获取用户信息等。
 
+   自定义拦截器  为什么需要我们自定义拦截器呢？
+   为了向请求头中添加token值，从而使得我们在进行一些请求的时候能够获取相应的高级权限。
+
    <pl.droidsonroids.gif.GifImageView  gif动画，可用作等待界面的动画
 
 2017/5/11
